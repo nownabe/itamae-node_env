@@ -1,6 +1,7 @@
 # Itamae::NodeEnv
 
-TODO: Write a gem description
+itamae-node_env gem is an [Itamae](https://github.com/ryotarai/itamae) plugin.
+Using itamae-node_env, you can use environment variables in node attributes.
 
 ## Installation
 
@@ -20,7 +21,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+recipe.rb:
+
+```ruby
+require 'itamae/node_env'
+
+file '/home/someone/.ssh/id_rsa' do
+  content node["secret_key"]
+  mode "0600"
+  owner "someone"
+  group "someone"
+end
+```
+
+node.json:
+
+```json
+{"secret_key": "env[IR_SECRET_KEY]"}
+```
+
+Execute itamae:
+
+```bash
+IR_SECRET_KEY="$(cat ./id_rsa_for_someone)"
+bundle exec itamae ssh -h target_host --node-json node.json recipe.rb
+```
 
 ## Contributing
 
