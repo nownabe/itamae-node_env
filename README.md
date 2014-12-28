@@ -43,7 +43,7 @@ node.json:
 Execute itamae:
 
 ```bash
-IR_SECRET_KEY="$(cat ./id_rsa_for_someone)"
+export IR_SECRET_KEY="$(cat ./id_rsa_for_someone)"
 bundle exec itamae ssh -h target_host --node-json node.json recipe.rb
 ```
 
