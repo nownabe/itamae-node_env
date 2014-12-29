@@ -5,7 +5,7 @@ module Itamae
   module NodeEnv
     def [](key)
       val = super(key)
-      if /\Aenv\[([^\]]+)\]\z/ =~ val
+      if val.is_a?(String) and /\Aenv\[([^\]]+)\]\z/ =~ val
         ENV[$1]
       else
         val
