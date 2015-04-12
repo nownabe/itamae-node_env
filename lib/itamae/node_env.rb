@@ -3,30 +3,57 @@ require "itamae/node_env/version"
 
 module Itamae
   module NodeEnv
-    def convert_env(val)
+    private
+
+    def apply_env(val, klass = nil)
+      klass ||= self.class
+
       case val
-      when String then
-        if /\Aenv\[([^\]]+)\]\z/ =~ val
-          return ENV[$1]
+      when String
+        if /\Aenv\[(?<key>[^\]]+)\]\z/ =~ val
+          ENV[key]
+        else
+          val
         end
-      when Array then
-        return val.map {|v| convert_env(v)}
-      when Hash then
-        hash = Hash.new
-        val.each {|k,v| hash[k] = convert_env(v)}
-        return hash
+      when Array
+        val.map { |v| apply_env(v, klass) }
+      when klass
+        val.each { |k, v| val[k] = apply_env(v, klass) }
+        val
+      else
+        val
       end
-      return val
     end
+  end
+
+  module NodeEnv11
+    include NodeEnv
 
     def initialize(source_hash = nil, default = nil, &blk)
-      source_hash = convert_env(source_hash)
-      super(source_hash, default, &blk)
+      super
+      self.each do |key, val|
+        self[key] = apply_env(val)
+      end
+    end
+  end
+
+  module NodeEnv12
+    include NodeEnv
+
+    def initialize(initial_hash, backend)
+      super
+      @mash = apply_env(@mash, Hashie::Mash)
     end
   end
 end
 
-::Itamae::Node.send(:prepend, ::Itamae::NodeEnv)
+major, minor, revision = ::Itamae::VERSION.split(".").map(&:to_i)
+
+case minor.to_i
+when 1
+  ::Itamae::Node.send(:prepend, ::Itamae::NodeEnv11)
+when 2
+  ::Itamae::Node.send(:prepend, ::Itamae::NodeEnv12)
+end
 
 Dotenv.load if Object.const_defined?(:Dotenv)
-
