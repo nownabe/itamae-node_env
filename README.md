@@ -24,8 +24,6 @@ Or install it yourself as:
 recipe.rb:
 
 ```ruby
-require 'itamae/node_env'
-
 file '/home/someone/.ssh/id_rsa' do
   content node["secret_key"]
   mode "0600"
@@ -40,12 +38,27 @@ node.json:
 {"secret_key": "env[IR_SECRET_KEY]"}
 ```
 
-Execute itamae:
+Execute Itamae with `itamae-env` command:
 
 ```bash
 export IR_SECRET_KEY="$(cat ./id_rsa_for_someone)"
-bundle exec itamae ssh -h target_host --node-json node.json recipe.rb
+bundle exec itamae-env ssh -h target_host -j node.json recipe.rb
 ```
+
+### With dotenv
+Add this line to Gemfile:
+
+```ruby
+gem "dotenv"
+```
+
+Make `.env` file:
+
+```bash
+IR_PASSWORD="password"
+```
+
+And execute `itamae-env` command.
 
 ## Contributing
 
