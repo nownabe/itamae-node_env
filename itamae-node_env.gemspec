@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["nownabe"]
   spec.email         = ["nownabe@gmail.com"]
   spec.summary       = %q{Environment variables in the node file}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/nownabe/itamae-node_env"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
