@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+begin
+  require "dotenv"
+  Dotenv.load
+rescue LoadError
+end
+require "itamae/node_env"
+
+require "itamae/cli"
+Itamae::CLI.start

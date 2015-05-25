@@ -55,5 +55,3 @@ when 1
 when 2
   ::Itamae::Node.send(:prepend, ::Itamae::NodeEnv12)
 end
-
-Dotenv.load if Object.const_defined?(:Dotenv)
