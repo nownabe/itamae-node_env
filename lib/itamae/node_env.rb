@@ -52,6 +52,6 @@ major, minor, revision = ::Itamae::VERSION.split(".").map(&:to_i)
 case minor.to_i
 when 1
   ::Itamae::Node.send(:prepend, ::Itamae::NodeEnv11)
-when 2
+when 2, 4
   ::Itamae::Node.send(:prepend, ::Itamae::NodeEnv12)
 end
