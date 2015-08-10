@@ -10,7 +10,7 @@ module Itamae
 
       case val
       when String
-        val.gsub(/env\[[a-zA-Z0-9]+\]/) {|h| /env\[(?<key>[^\]]+)\]/ =~ h; ENV[key]}
+        val.gsub(/env\[(\w+?)\]/) { ENV[Regexp.last_match[1]] }
       when Array
         val.map { |v| apply_env(v, klass) }
       when klass
