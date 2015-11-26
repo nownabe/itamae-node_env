@@ -1,5 +1,7 @@
 # Itamae::NodeEnv
 
+[![Gem Version](https://badge.fury.io/rb/itamae-node_env.svg)](https://badge.fury.io/rb/itamae-node_env)
+
 itamae-node_env gem is an [Itamae](https://github.com/ryotarai/itamae) plugin.
 Using itamae-node_env, you can use environment variables in node attributes.
 
