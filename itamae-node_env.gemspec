@@ -19,6 +19,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "itamae", '>= 1.1.1'
 
-  spec.add_development_dependency "bundler", "~> 1.7"
+  spec.add_development_dependency "bundler", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
 end
